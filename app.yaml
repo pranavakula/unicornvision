@@ -1,0 +1,23 @@
+runtime: python39
+entrypoint: streamlit run app.py --server.port=$PORT --server.enableCORS=false --server.enableXsrfProtection=false
+
+instance_class: F2
+
+automatic_scaling:
+  min_instances: 1
+  max_instances: 5
+  min_idle_instances: 1
+  max_idle_instances: 2
+  min_pending_latency: 30ms
+  max_pending_latency: automatic
+  target_cpu_utilization: 0.65
+
+env_variables:
+  STREAMLIT_SERVER_PORT: 8080
+  STREAMLIT_SERVER_HEADLESS: "true"
+  STREAMLIT_BROWSER_GATHER_USAGE_STATS: "false"
+
+handlers:
+  - url: /.*
+    script: auto
+    secure: always
